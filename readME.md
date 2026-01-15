@@ -1,38 +1,38 @@
 # SystemC MP3 Decoder with Hardware Acceleration  
 
 ## Project Overview
-[cite_start]This project is a functional model of an MP3 Decoder implemented using **SystemC TLM (Transaction Level Modeling)**[cite: 1, 22]. [cite_start]The primary goal is to demonstrate the performance benefits of **hardware-software partitioning** by moving computationally expensive decoding stages—specifically the **IMDCT** and **Synthesis Filter Bank**—from a general-purpose CPU to dedicated hardware accelerators[cite: 15, 98, 133].
+This project is a functional model of an MP3 Decoder implemented using **SystemC TLM (Transaction Level Modeling)**[cite: 1, 22]. The primary goal is to demonstrate the performance benefits of **hardware-software partitioning** by moving computationally expensive decoding stages—specifically the **IMDCT** and **Synthesis Filter Bank**—from a general-purpose CPU to dedicated hardware accelerators[cite: 15, 98, 133].
 
 The system models two operational scenarios:
-1.  [cite_start]**Sequential Baseline (CPU-Only):** All decoding stages are executed on a single CPU thread[cite: 88].
-2.  [cite_start]**Concurrent Accelerated Run:** The bottleneck stages are offloaded to concurrent hardware modules, allowing for pipelined execution[cite: 98, 99].
+1.  **Sequential Baseline (CPU-Only):** All decoding stages are executed on a single CPU thread[cite: 88].
+2.  **Concurrent Accelerated Run:** The bottleneck stages are offloaded to concurrent hardware modules, allowing for pipelined execution[cite: 98, 99].
 
 ## System Architecture
-[cite_start]The decoder is modeled as a 3-module pipeline connected via **SystemC TLM FIFOs** (`sc_fifo`)[cite: 22, 60].
+The decoder is modeled as a 3-module pipeline connected via **SystemC TLM FIFOs** (`sc_fifo`)[cite: 22, 60].
 
 
 ### Modules & Pipeline Stages
 | Stage | Process | Partitioning | Latency | Role |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 & 2 | Huffman Decode & Dequantize | CPU | 10 ns | [cite_start]Initial light processing [cite: 38-42]. |
-| 3 | IMDCT | Accelerator | 50 ns | [cite_start]Heavy computational load [cite: 43-47]. |
-| 4 | Synthesis Filter Bank | Accelerator | 80 ns | [cite_start]System's critical bottleneck [cite: 48-52]. |
+| 1 & 2 | Huffman Decode & Dequantize | CPU | 10 ns | Initial light processing [cite: 38-42]. |
+| 3 | IMDCT | Accelerator | 50 ns | Heavy computational load [cite: 43-47]. |
+| 4 | Synthesis Filter Bank | Accelerator | 80 ns | System's critical bottleneck [cite: 48-52]. |
 
 **Data Flow:**
-* [cite_start]**CPU:** Decodes frequency coefficients and sends them to the IMDCT Accelerator[cite: 62, 83].
-* [cite_start]**IMDCT Accelerator:** Processes coefficients into time-domain samples and forwards them to the Filter Bank[cite: 63, 84].
-* [cite_start]**Filter Bank Accelerator:** Performs the final synthesis and returns the PCM output back to the CPU[cite: 64, 85].
+* **CPU:** Decodes frequency coefficients and sends them to the IMDCT Accelerator[cite: 62, 83].
+* **IMDCT Accelerator:** Processes coefficients into time-domain samples and forwards them to the Filter Bank[cite: 63, 84].
+* **Filter Bank Accelerator:** Performs the final synthesis and returns the PCM output back to the CPU[cite: 64, 85].
 
 ## Performance Results
-[cite_start]Based on a simulation of 10 audio frames, the hardware acceleration provides a significant throughput improvement[cite: 81, 130]:
+Based on a simulation of 10 audio frames, the hardware acceleration provides a significant throughput improvement[cite: 81, 130]:
 
 | Metric | Sequential (Baseline) | Concurrent (Accelerated) |
 | :--- | :--- | :--- |
-| **Throughput (per frame)** | [cite_start]140 ns [cite: 116] | [cite_start]80 ns [cite: 117] |
-| **Total Simulation Time** | [cite_start]1400 ns [cite: 119] | [cite_start]860 ns [cite: 120] |
-| **System Speedup** | 1.0x | [cite_start]**1.63x** [cite: 123, 126] |
+| **Throughput (per frame)** | 140 ns | 80 ns |
+| **Total Simulation Time** | 1400 ns | 860 ns |
+| **System Speedup** | 1.0x | **1.63x** |
 
-[cite_start]The system's throughput in accelerated mode is limited only by the slowest stage (the 80 ns Filter Bank), demonstrating the effectiveness of the concurrent pipeline[cite: 100, 103].
+The system's throughput in accelerated mode is limited only by the slowest stage (the 80 ns Filter Bank), demonstrating the effectiveness of the concurrent pipeline[cite: 100, 103].
 
 ## File Structure
 * `cpu.h` / `.cpp`: Implements the CPU module with Huffman decoding and dequantization.

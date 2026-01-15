@@ -1,0 +1,106 @@
+$date
+     Dec 03, 2025       14:20:09
+$end
+
+$version
+ SystemC 3.0.1-Accellera --- Jan 12 2025 23:59:22
+$end
+
+$timescale
+     1 ns
+$end
+
+$scope module SystemC $end
+$var wire   32  aaaaa  CPU_frames_decoded [31:0]  $end
+$var wire   32  aaaab  IMDCT_frames_decoded [31:0]  $end
+$var wire   32  aaaac  FILTER_frames_decoded [31:0]  $end
+$upscope $end
+$enddefinitions  $end
+
+$comment
+All initial values are dumped below at time 0 sec = 0 timescale units.
+$end
+
+$dumpvars
+b0 aaaaa
+b0 aaaab
+b0 aaaac
+$end
+
+#20
+b1 aaaaa
+
+#30
+b10 aaaaa
+
+#40
+b11 aaaaa
+
+#50
+b100 aaaaa
+
+#60
+b101 aaaaa
+
+#70
+b110 aaaaa
+
+#80
+b111 aaaaa
+
+#90
+b1000 aaaaa
+
+#100
+b1001 aaaaa
+
+#110
+b1 aaaab
+
+#160
+b10 aaaab
+
+#210
+b11 aaaab
+
+#220
+b1 aaaac
+
+#260
+b100 aaaab
+
+#300
+b10 aaaac
+
+#310
+b101 aaaab
+
+#360
+b110 aaaab
+
+#380
+b11 aaaac
+
+#410
+b111 aaaab
+
+#460
+b1000 aaaab
+b100 aaaac
+
+#510
+b1001 aaaab
+
+#540
+b101 aaaac
+
+#620
+b110 aaaac
+
+#700
+b111 aaaac
+
+#780
+b1000 aaaac
+
+#860
